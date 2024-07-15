@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>お問い合わせ詳細</h1>
+	<table class="table table-striped" border="1">
+	    <tr>
+	        <td>ID</td>
+	        <td th:text="${contact.id}">ID</td>
+	    </tr>
+	    <tr>
+	        <td>姓</td>
+	        <td th:text="${contact.lastName}">姓</td>
+	    </tr>
+		<tr>
+		    <td>名</td>
+		    <td th:text="${contact.firstName}">名</td>
+		</tr>
+		<tr>
+		    <td>メールアドレス</td>
+		    <td th:text="${contact.email}">名</td>
+		</tr>
+		<tr>
+		    <td>電話番号</td>
+		    <td th:text="${contact.phone}">名</td>
+		</tr>
+		<tr>
+		    <td>郵便番号</td>
+		    <td th:text="${contact.zipCode}">名</td>
+		</tr>
+		<tr>
+		    <td>住所</td>
+		    <td th:text="${contact.address}">名</td>
+		</tr>
+		<tr>
+		    <td>建物名</td>
+		    <td th:text="${contact.buildingName}">名</td>
+		</tr>
+	    <tr>
+	        <td>お問い合わせ種別</td>
+	        <td th:text="${contact.contactType}">お問い合わせ種別</td>
+	    </tr>
+		<tr>
+		    <td>内容</td>
+		    <td th:text="${contact.body}">名</td>
+		</tr>
+	    <tr>
+	        <td>作成日時</td>
+	        <td th:text="${contact.createdAt}">作成日時</td>
+	    </tr>
+	    <tr>
+	        <td>更新日時</td>
+	        <td th:text="${contact.updatedAt}">更新日時</td>
+	    </tr>
+	</table>
+	<!-- 編集ボタン 	-->	
+	<a th:href="@{/admin/contacts/:{id}/edit(id=${contact.id})}">編集する</a>
+	<!-- ログアウトボタン -->
+	<form th:action="@{/admin/logout}" method="post">
+	    <input type="submit" value="ログアウト">
+	</form>	
+</body>
+</html>
