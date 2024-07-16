@@ -13,14 +13,13 @@ import com.example.demo.repository.ContactRepository;
 @Service
 public class ContactServiceImpl implements ContactService {
 
-	@Autowired
-	private ContactRepository contactRepository;
-	
-	@Override
-	public void saveContact(ContactForm contactForm) {
+    @Autowired
+    private ContactRepository contactRepository;
 
+    @Override
+    public void saveContact(ContactForm contactForm) {
         Contact contact = new Contact();
-
+        
         contact.setLastName(contactForm.getLastName());
         contact.setFirstName(contactForm.getFirstName());
         contact.setEmail(contactForm.getEmail());
@@ -32,19 +31,19 @@ public class ContactServiceImpl implements ContactService {
         contact.setBody(contactForm.getBody());
 
         contactRepository.save(contact);
-	}
-	
-	@Override
+    }
+
+    @Override
     public List<Contact> getAllContacts() {
         return contactRepository.findAll();
     }
-	
-	@Override
+
+    @Override
     public Optional<Contact> getContactById(Long id) {
         return contactRepository.findById(id);
     }
-	
-	@Override
+
+    @Override
     public void updateContact(Contact contact) {
         Contact existingContact = contactRepository.findById(contact.getId()).orElse(null);
         if (existingContact != null) {
@@ -60,9 +59,9 @@ public class ContactServiceImpl implements ContactService {
             contactRepository.save(existingContact);
         }
     }
-	
-	@Override
+
+    @Override
     public void deleteContactById(Long id) {
-		contactRepository.deleteById(id);
-	}
+        contactRepository.deleteById(id);
+    }
 }

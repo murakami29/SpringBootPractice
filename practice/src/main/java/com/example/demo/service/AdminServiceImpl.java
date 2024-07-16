@@ -9,16 +9,17 @@ import com.example.demo.repository.AdminRepository;
 
 @Service
 public class AdminServiceImpl implements AdminService {
-	@Autowired
+    
+    @Autowired
     private AdminRepository adminRepository;
-	
+
     @Autowired
     private PasswordService passwordService;
-	
-	@Override
-	public void saveAdmin(SignupForm signupForm) {
-		Admin admin = new Admin();
-		
+
+    @Override
+    public void saveAdmin(SignupForm signupForm) {
+        Admin admin = new Admin();
+
         admin.setLastName(signupForm.getLastName());
         admin.setFirstName(signupForm.getFirstName());
         admin.setEmail(signupForm.getEmail());
@@ -26,8 +27,7 @@ public class AdminServiceImpl implements AdminService {
         admin.setCurrentSignInAt(signupForm.getCurrentSignInAt());
         admin.setUpdatedAt(signupForm.getUpdatedAt());
         admin.setCreatedAt(signupForm.getCreatedAt());
-        
-        adminRepository.save(admin);
-	}
-}
 
+        adminRepository.save(admin);
+    }
+}
