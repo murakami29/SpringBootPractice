@@ -1,5 +1,6 @@
 package com.example.demo.controller;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.example.demo.entity.Contact;
+import com.example.demo.form.ContactUpdateForm;
 import com.example.demo.form.SigninForm;
 import com.example.demo.form.SignupForm;
 import com.example.demo.service.AdminService;
@@ -105,7 +107,10 @@ public class AdminController {
     public String showEditContact(@PathVariable Long id, Model model) {
         Contact contact = contactService.getContactById(id).orElse(null);
         if (contact != null) {
-            model.addAttribute("contact", contact);
+        	ContactUpdateForm contactUpdateForm = new ContactUpdateForm();
+        	BeanUtils.copyProperties(contact, contactUpdateForm);
+        	model.addAttribute("contact", contact);
+        	model.addAttribute("contactUpdateForm", contactUpdateForm);
             return "admin/contactEdit";
         } else {
             model.addAttribute("errorMessage", "お問い合わせが見つかりません");
@@ -114,11 +119,11 @@ public class AdminController {
     }
 
     @PostMapping("/admin/contacts/update")
-    public String updateContact(@ModelAttribute("contact") Contact contact, BindingResult result) {
+    public String updateContact(@Validated @ModelAttribute("contactUpdateForm") ContactUpdateForm contactUpdateForm, BindingResult result, Model model) {
     	if (result.hasErrors()) {
             return "admin/contactEdit";
         }
-    	contactService.updateContact(contact);
+    	contactService.updateContact(contactUpdateForm);
         return "redirect:/admin/contacts";
     }
     

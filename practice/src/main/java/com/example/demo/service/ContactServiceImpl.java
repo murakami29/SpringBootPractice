@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.demo.entity.Contact;
 import com.example.demo.form.ContactForm;
+import com.example.demo.form.ContactUpdateForm;
 import com.example.demo.repository.ContactRepository;
 
 @Service
@@ -44,18 +45,21 @@ public class ContactServiceImpl implements ContactService {
     }
 
     @Override
-    public void updateContact(Contact contact) {
-        Contact existingContact = contactRepository.findById(contact.getId()).orElse(null);
-        if (existingContact != null) {
-            existingContact.setLastName(contact.getLastName());
-            existingContact.setFirstName(contact.getFirstName());
-            existingContact.setEmail(contact.getEmail());
-            existingContact.setPhone(contact.getPhone());
-            existingContact.setZipCode(contact.getZipCode());
-            existingContact.setAddress(contact.getAddress());
-            existingContact.setBuildingName(contact.getBuildingName());
-            existingContact.setContactType(contact.getContactType());
-            existingContact.setBody(contact.getBody());
+    public void updateContact(ContactUpdateForm contactUpdateForm) {
+    	Optional<Contact> optionalContact = contactRepository.findById(contactUpdateForm.getId());
+        
+        if (optionalContact.isPresent()) {
+        	Contact existingContact = optionalContact.get();
+        	
+            existingContact.setLastName(contactUpdateForm.getLastName());
+            existingContact.setFirstName(contactUpdateForm.getFirstName());
+            existingContact.setEmail(contactUpdateForm.getEmail());
+            existingContact.setPhone(contactUpdateForm.getPhone());
+            existingContact.setZipCode(contactUpdateForm.getZipCode());
+            existingContact.setAddress(contactUpdateForm.getAddress());
+            existingContact.setBuildingName(contactUpdateForm.getBuildingName());
+            existingContact.setContactType(contactUpdateForm.getContactType());
+            existingContact.setBody(contactUpdateForm.getBody());
             contactRepository.save(existingContact);
         }
     }
